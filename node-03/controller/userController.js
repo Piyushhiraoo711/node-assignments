@@ -21,18 +21,18 @@ export const createUser = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
 
-    if (!(firstName && lastName && email && password)) {
-      res
-        .status(400)
-        .json({ success: false, message: "All fields are required" });
-    }
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(409).json({
-        success: false,
-        message: "User with this email already exits in.",
-      });
-    }
+    // if (!(firstName && lastName && email && password)) {
+    //   res
+    //     .status(400)
+    //     .json({ success: false, message: "All fields are required" });
+    // }
+    // const existingUser = await User.findOne({ email });
+    // if (existingUser) {
+    //   return res.status(409).json({
+    //     success: false,
+    //     message: "User with this email already exits in.",
+    //   });
+    // }
 
     const encryptPassword = await bcrypt.hash(password, 10);
 
