@@ -9,11 +9,13 @@ import {
   updateUser,
 } from "../controller/userController.js";
 import verifyToken from "../middleware/verifyToken.js";
+import { validateUserjoi } from "../middleware/validateUserJoi.js";
+import { userSchemaValidate } from "../model/userValidationModelJoi.js";
 
 const router = express.Router();
 
 router.route("/").get(getUser);
-router.route("/register").post(createUser);
+router.route("/register").post(validateUserjoi(userSchemaValidate), createUser);
 router.route("/login").post(loginUser);
 router.route("/logout").get(logoutUser);
 router.route("/:id").get(getUserById);

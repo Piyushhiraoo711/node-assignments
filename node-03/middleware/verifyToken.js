@@ -3,7 +3,8 @@ import jwt from "jsonwebtoken";
 const verifyToken = async (req, res, next) => {
   try {
     console.log("ihsdmnbjskbdh");
-    const token = req.cookie.token;
+    const token = req.cookies.token;
+    console.log("token", token);
 
     if (!token) {
       return res.status(401).json({
@@ -18,9 +19,9 @@ const verifyToken = async (req, res, next) => {
         success: false,
       });
     }
-    console.log("token generate");
+    console.log("token generate", typeof tokenDecode.userId);
     req.id = tokenDecode.userId;
-    return next();
+    next();
   } catch (error) {
     return res.status(401).json("Invalid token");
   }

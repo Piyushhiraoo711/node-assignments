@@ -47,10 +47,13 @@ export const createUser = async (req, res) => {
       success: true,
       message: "Account created successfully",
     });
-  } catch (error) {
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
     res.status(400).json({
       success: false,
-      message: error.message,
+      message: err.message,
     });
   }
 };
@@ -70,7 +73,7 @@ export const loginUser = async (req, res) => {
 
     if (!user) {
       return res.status(400).json({
-        message: "Incorrect email or password.",
+        message: "Incorrect email ",
         success: false,
       });
     }
@@ -79,7 +82,7 @@ export const loginUser = async (req, res) => {
 
     if (!passwordMatch) {
       return res.status(400).json({
-        message: "Incorrect email or password.",
+        message: "Incorrect password.",
         success: false,
       });
     }
@@ -139,7 +142,7 @@ export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     const updatedData = req.body;
-    console.log("updatedData", updatedData.lastName);
+    // console.log("updatedData", updatedData.lastName);
     const updateUser = await User.findByIdAndUpdate(id, updatedData, {
       new: true,
     });
@@ -182,7 +185,7 @@ export const deleteUser = async (req, res) => {
 
 export const logoutUser = async (req, res) => {
   try {
-    console.log("shadjbs")
+    console.log("shadjbs");
     return res.status(200).cookie("token", "", { maxAge: 0 }).json({
       success: true,
       message: "Logged out successfully",
