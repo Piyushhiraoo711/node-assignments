@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 
-function isPasswordStrong(password) {
-  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-    password
-  );
-}
+// function isPasswordStrong(password) {
+//   return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+//     password
+//   );
+// }
 
 const userSchema = new mongoose.Schema(
   {
     firstName: {
-      type: String,
+      // type: String,
       // required: [true, "First Name is required"],
       // validate: {
       //   validator: (v) => /^[a-zA-Z]+$/.test(v),
@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
       // },
     },
     lastName: {
-      type: String,
+      // type: String,
       // required: [true, "Last Name is required"],
       // validate: {
       //   validator: (v) => /^[a-zA-Z]+$/.test(v),
@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema(
       // },
     },
     email: {
-      type: String,
+      // type: String,
       // required: [true, "Email is required"],
       // unique: true,
       // lowercase: true,
@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema(
       // },
     },
     password: {
-      type: String,
+      // type: String,
       // required: [true, "Password is required"],
       // validate: {
       //   validator: isPasswordStrong,
@@ -48,9 +48,12 @@ const userSchema = new mongoose.Schema(
       //     "Password must be at least 8 characters long and contain at least one number.",
       // },
     },
+    phone: {},
+    address: {},
+    role: {},
   },
   { timestamps: true }
 );
 
-const User = mongoose.model("users", userSchema);
+const User = mongoose.model("Users", userSchema);
 export default User;

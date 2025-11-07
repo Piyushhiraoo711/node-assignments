@@ -2,9 +2,9 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
-import { userRoutes } from "./routes/index.js";
+import { adminRoutes, orderRoutes, productRoutes, userRoutes } from "./routes/index.js";
 import { connectDB } from "./database/db.js";
-import verifyToken from "./middleware/verifyToken.js";
+
 dotenv.config({});
 
 const app = express();
@@ -20,7 +20,10 @@ app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 3000;
 
-app.use("/user", userRoutes);
+app.use("/auth", userRoutes);
+app.use("/product", productRoutes);
+app.use("/order", orderRoutes);
+app.use("/admin", adminRoutes)
 
 app.listen(PORT, () => {
   connectDB();

@@ -19,20 +19,22 @@ export const getUser = async (req, res) => {
 
 export const createUser = async (req, res) => {
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, phone, address, role } =
+      req.body;
+    console.log(firstName, lastName, email, password, phone, address, role);
 
     // if (!(firstName && lastName && email && password)) {
     //   res
     //     .status(400)
     //     .json({ success: false, message: "All fields are required" });
     // }
-    // const existingUser = await User.findOne({ email });
-    // if (existingUser) {
-    //   return res.status(409).json({
-    //     success: false,
-    //     message: "User with this email already exits in.",
-    //   });
-    // }
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({
+        success: false,
+        message: "User with this email already exits in.",
+      });
+    }
 
     const encryptPassword = await bcrypt.hash(password, 10);
 
@@ -41,6 +43,9 @@ export const createUser = async (req, res) => {
       lastName,
       email,
       password: encryptPassword,
+      phone,
+      address,
+      role,
     });
 
     return res.status(201).json({
@@ -60,9 +65,10 @@ export const createUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
+    console.log(email, password, role)
 
-    if (!(email && password)) {
+    if (!(email && password && role)) {
       res.status(400).json({
         message: "Someting is missing",
         success: false,
@@ -87,6 +93,13 @@ export const loginUser = async (req, res) => {
       });
     }
 
+    if (role != user.role) {
+      return res.status(400).json({
+        message: `Account doesn't exists with current role ${role}. `,
+        success: false,
+      });
+    }
+
     const tokenData = {
       userId: user._id,
     };
@@ -100,6 +113,9 @@ export const loginUser = async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      phone: user.phone,
+      address: user.address,
+      role: user.role,
     };
 
     return res
@@ -194,3 +210,8 @@ export const logoutUser = async (req, res) => {
     console.log(error);
   }
 };
+
+
+
+
+

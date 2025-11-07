@@ -9,8 +9,8 @@ import {
   updateUser,
 } from "../controller/userController.js";
 import verifyToken from "../middleware/verifyToken.js";
-import { validateUserjoi } from "../middleware/validateUserJoi.js";
-import { userSchemaValidate } from "../model/userValidationModelJoi.js";
+import { validateUserjoi} from "../validation/validateUserJoi.js"
+import { userSchemaValidate } from "../modelValidation/userValidationModelJoi.js";
 
 const router = express.Router();
 
