@@ -37,3 +37,7 @@ Role Based Authentication
    4. Admin can delete the order
    5. Admin can delete the user and seller
    6. Admin can modified the product
+
+Remaining 
+1. Cloudinary part 
+2. Analise the sell and product
